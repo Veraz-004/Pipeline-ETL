@@ -24,8 +24,8 @@ def rodar_pipeline():
     Load(arqvs, arqvs_gold, silver, gold, log)
     return arqvs, gold
 
-def rodar_analysis(arqvs):
-    if arqvs != []:
+def rodar_analysis(arqvs, gold):
+    if arqvs:
         lucro_max(gold, log)
         receita_total(gold, log)
         dia_quantidade(gold, log)
@@ -34,4 +34,4 @@ def rodar_analysis(arqvs):
 
 if __name__ == "__main__":
     arqvs, gold=rodar_pipeline()
-    rodar_analysis(arqvs)
+    rodar_analysis(arqvs, gold)
