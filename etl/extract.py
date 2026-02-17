@@ -10,3 +10,4 @@ def Extract():
     gold.mkdir(parents=True, exist_ok=True)
     arquivos=sorted(bronze.glob("*.csv"))
     return silver, gold, arquivos
+

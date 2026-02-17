@@ -30,9 +30,11 @@ def Transform(arquivos):
             'receita': df['preco']*df['quantidade'],
             'custo_total': df['custo']*df['quantidade'],
             'lucro_total': (df['preco']-df['custo'])*df['quantidade'],
+            'quantidade': df['quantidade'],
             'data': df['data'],
         })
         arqvs.append(df)
         arqvs_gold.append(df_gold)
     return arqvs, arqvs_gold
 #* a função retorna duas listas, uma com os dados originais limpos(arqvs), e outra com os dados para análise(arqvs_gold)
+
