@@ -9,9 +9,9 @@ def Extract(log):
     bronze.mkdir(parents=True, exist_ok=True)
     silver.mkdir(parents=True, exist_ok=True)
     gold.mkdir(parents=True, exist_ok=True)
-    try:
-        arquivos=sorted(bronze.glob("*.csv"))
-    except:
-        log.error("Arquivos .csv não encontrados")
+    
+    arquivos=sorted(bronze.glob("*.csv"))
+    if not arquivos:
+        log.error("Nenhum arquivo .csv encontrado na pasta: data/bronze")
     return silver, gold, arquivos
 

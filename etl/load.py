@@ -13,7 +13,8 @@ def Load(arqvs, arqvs_gold, silver, gold, log):
     else:
         df_f_silver=pd.concat(arqvs, ignore_index=True)
         df_f_gold=pd.concat(arqvs_gold, ignore_index=True)
+        log.info("Dados empilhados com sucesso")
         df_f_silver.to_csv(silver/"silver.csv", index=False)
         df_f_gold.to_csv(gold/"gold.csv", index=False)
-        print("Arquivos limpos salvos em: data/silver/silver.csv")
-        print("Arquivos prontos para análise salvos em: data/gold/gold.csv")
+        log.info("Arquivos limpos salvos em: data/silver/silver.csv")
+        log.info("Arquivos prontos para análise salvos em: data/gold/gold.csv")

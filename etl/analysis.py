@@ -13,7 +13,7 @@ def lucro_max(gold, log):
     lucro_max=df['lucro_total'].max() 
     linha=df[df['lucro_total'] == lucro_max]
     produto = linha['produto'].iloc[0]
-    print(f"O produto mais vendido é: {produto}")
+    return produto
 
 def receita_total(gold, log):
     try:
@@ -21,8 +21,9 @@ def receita_total(gold, log):
     except:
         log.error("Nenhum dado localizado em data/gold/gold.csv")
         log.warning("Não foi possível continuar a operação: etl/analysis.py")
-    receita_total=df['receita'].sum()
-    print(f'A soma das receitas é: {receita_total}')
+    receita_total_var=df['receita'].sum()
+    return receita_total_var
+
 
 def dia_quantidade(gold, log):
     try:
@@ -31,8 +32,8 @@ def dia_quantidade(gold, log):
         log.error("Nenhum dado localizado em data/gold/gold.csv")
         log.warning("Não foi possível continuar a operação: etl/analysis.py")
     vendas_por_dia= df.groupby('data')['quantidade'].sum()
-    dia_max=vendas_por_dia.idxmax()
-    print(f"O dia que teve mais vendas foi: {dia_max}")
+    dia_max_quantidade=vendas_por_dia.idxmax()
+    return dia_max_quantidade
 
 def dia_receita(gold, log):
     try:
@@ -40,6 +41,6 @@ def dia_receita(gold, log):
     except:
         log.error("Nenhum dado localizado em data/gold/gold.csv")
         log.warning("Não foi possível continuar a operação: etl/analysis.py")
-    receita_por_dia=df.groupby('data')['quantidade'].sum()
-    dia_max=receita_por_dia.idxmax()
-    print(f"O dia com maior receita é: {dia_max}")
+    receita_por_dia=df.groupby('data')['receita'].sum()
+    dia_max_receita=receita_por_dia.idxmax()
+    return dia_max_receita
