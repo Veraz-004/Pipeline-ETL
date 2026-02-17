@@ -1,14 +1,15 @@
 import pandas as pd
 from pathlib import Path
-
+import logging
+log=logging.getLogger(__name__)
 #* Neste arquivo vamos simplesmente criar dois arquivos:
 #* O primeiro (silver.csv) irá conter todpos os dados das primeiras pastas, só que limpos
 #* o segundo (gold.csv) irá conter métricas baseadas nos dados brutos já prontas para análise
 #* E caso as listas do arquivo transform retornarem vazias a operação não será concluída
-def Load(arqvs, arqvs_gold, silver, gold):
+def Load(arqvs, arqvs_gold, silver, gold, log):
     if arqvs == []:
-        print("Lista de arquivos vazia")
-        print("Não foi possível continuar com a operação")
+        log.error("Lista de dados vazia")
+        log.warning("Não foi possivel continuar a operação")
     else:
         df_f_silver=pd.concat(arqvs, ignore_index=True)
         df_f_gold=pd.concat(arqvs_gold, ignore_index=True)
