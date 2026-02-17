@@ -1,86 +1,41 @@
-# Pipeline ETL para Consolidação de Múltiplos Arquivos CSV
+# 📊 Pipeline ETL + Análise + Relatório Automático
 
-Este projeto implementa uma pipeline ETL (Extract, Transform, Load) em Python para consolidar múltiplos arquivos CSV de vendas, limpar dados inconsistentes e gerar métricas prontas para análise.
+Este projeto implementa uma pipeline completa de dados em Python, incluindo:
 
-Esta pipeline ETL organiza dados de vendas, na qual dentro do arquivo de vendas (formato suportado é o .csv) tenha as informações de:
- - produto (nome do produto vendido)
- - preco (valor do produto vendido)
- - custo (quanto o produto valeu na sua compra pelo vendendor, para que o mesmo possa vende-lo)
- - quantidade (quantidade de produtos vendidos)
- - data (dia na qual o produto foi vendido)
+* Extração de múltiplos arquivos CSV
+* Limpeza e transformação dos dados
+* Geração de métricas analíticas
+* Logging da execução
+* Criação automática de relatório em arquivo de texto
 
-Esta pipeline limpa os dados, e cria métricas para a análise
-As métricas criadas estão sendo listadas a baixo:
- - lucro (valor na qual o vendendor ganha em cima da venda do produto. Esta métrica calcula o lucro UNITÁRIO de cada produto)
- - lucro_total (cálculo feito em base do lucro vezes a quantidade de produtos vendidos. Calcula somente o lucro total de cada produto vendido)
- - custo_total (cálculo feito em base do custo vezes a quantidade de produtos vendidos. Calcula somente o custo total de cada produto vendido)
- - receita (cálculo feito em base do preco vezes a quantidade de produtos vendidos. Calcula somente a receira
-
-O objetivo é automatizar o processamento de dados semelhante a ferramentas como Power BI, porém usando Python.
-
-## Estrutura do Projeto
-
-ETL_base/
-│
-├── data/
-│   ├── bronze/   → dados brutos
-│   ├── silver/   → dados limpos
-│   └── gold/     → dados prontos para análise
-│
-├── extract.py    → etapa de extração
-├── transform.py  → limpeza e criação de métricas
-├── load.py       → salvamento dos dados finais
-└── main.py       → execução da pipeline
-
-## Como executar
-
-1. Instale as dependências:
-pip install -r requirements.txt
-
-2. Coloque os arquivos CSV na pasta:
-data/bronze/
-
-3. Execute:
-python main.py
-
-## Tecnologias
-
-- Python
-- Pandas
-- ETL
-- Manipulação de dados# 📊 Pipeline ETL para Consolidação de Múltiplos Arquivos CSV
-
-Este projeto implementa uma pipeline ETL (Extract, Transform, Load) em Python para consolidar múltiplos arquivos CSV de vendas, limpar dados inconsistentes e gerar métricas prontas para análise.
-
-O objetivo é simular um fluxo real de engenharia de dados, organizando dados brutos até dados analíticos.
+O objetivo é simular um fluxo real de engenharia de dados e Business Intelligence.
 
 ---
 
-## 🧠 O que a pipeline faz
+## 🧠 Fluxo da Pipeline
 
-A pipeline lê arquivos CSV contendo dados de vendas com as seguintes colunas:
+### 🥉 Extract
 
-* produto — nome do produto vendido
-* preco — valor de venda
-* custo — custo do produto
-* quantidade — quantidade vendida
-* data — data da venda
+Busca arquivos CSV na pasta `data/bronze/` e garante a existência das pastas:
 
-Depois:
+* `data/bronze`
+* `data/silver`
+* `data/gold`
 
-### 🥉 Bronze (dados brutos)
+Se nenhum arquivo for encontrado, a pipeline registra erro no log.
 
-Arquivos originais sem modificação.
+---
 
-### 🥈 Silver (dados limpos)
+### 🥈 Transform
+
+Limpeza dos dados:
 
 * Conversão de tipos
 * Remoção de valores inválidos
 * Remoção de duplicatas
+* Tratamento de diferentes encodings e separadores
 
-### 🥇 Gold (dados para análise)
-
-Criação de métricas:
+Criação dos dados analíticos:
 
 * receita = preço × quantidade
 * custo_total = custo × quantidade
@@ -88,27 +43,84 @@ Criação de métricas:
 
 ---
 
-## 📂 Estrutura do projeto
+### 🥇 Load
+
+Salva os resultados:
+
+* `data/silver/silver.csv` → dados limpos
+* `data/gold/gold.csv` → dados prontos para análise
+
+---
+
+## 📈 Análises Geradas
+
+A partir dos dados gold:
+
+* Produto mais lucrativo
+* Receita total
+* Dia com maior quantidade vendida
+* Dia com maior receita
+
+---
+
+## 📄 Relatório Automático
+
+Após a análise, o sistema gera:
+
+```
+reports/relatórios.txt
+```
+
+Contendo:
+
+* Produto mais vendido
+* Receita total
+* Dia com mais vendas
+* Dia com maior montante
+
+---
+
+## 🧾 Logging
+
+A execução da pipeline é registrada em:
+
+```
+logs/pipeline.log
+```
+
+Incluindo:
+
+* etapas executadas
+* arquivos processados
+* avisos e erros
+
+---
+
+## 📂 Estrutura do Projeto
 
 ```
 ETL_base/
 │
 ├── data/
-│   ├── bronze/   # dados brutos
-│   ├── silver/   # dados limpos
-│   └── gold/     # dados prontos para análise
+│   ├── bronze/
+│   ├── silver/
+│   └── gold/
 │
-├── extract.py    # etapa de extração
-├── transform.py  # limpeza e transformação
-├── load.py       # salvamento dos dados
-├── analysis.py   # análises finais
-├── main.py       # execução da pipeline
+├── reports/
+├── logs/
+│
+├── extract.py
+├── transform.py
+├── load.py
+├── analysis.py
+├── relatório.py
+├── main.py
 └── requirements.txt
 ```
 
 ---
 
-## ▶️ Como executar
+## ▶️ Como Executar
 
 ### 1️⃣ Instalar dependências
 
@@ -116,9 +128,9 @@ ETL_base/
 pip install -r requirements.txt
 ```
 
-### 2️⃣ Colocar arquivos CSV
+### 2️⃣ Adicionar arquivos CSV
 
-Coloque os arquivos na pasta:
+Coloque os arquivos em:
 
 ```
 data/bronze/
@@ -132,39 +144,18 @@ python main.py
 
 ---
 
-## 📈 Análises disponíveis
+## 🎯 Objetivo
 
-Após a execução, o projeto gera insights como:
+Projeto desenvolvido para prática de:
 
-* Produto com maior lucro
-* Receita total
-* Dia com maior quantidade vendida
-* Dia com maior receita
-
-Essas análises são feitas pelo módulo `analysis.py`.
-
----
-
-## 🛠 Tecnologias utilizadas
-
-* Python
-* Pandas
+* Engenharia de Dados
+* Automação com Python
 * ETL
-* Manipulação de dados
-
----
-
-## 🎯 Objetivo do projeto
-
-Este projeto foi desenvolvido para prática de engenharia de dados e automação de análises, simulando cenários reais de processamento de dados empresariais.
+* Análise de dados
+* Logging de sistemas
 
 ---
 
 ## 👨‍💻 Autor
 
 Projeto desenvolvido para estudos e portfólio.
-
-
-## Objetivo
-
-Este projeto foi desenvolvido para prática de engenharia de dados e automação de análise, simulando cenários reais de processamento de dados empresariais.
